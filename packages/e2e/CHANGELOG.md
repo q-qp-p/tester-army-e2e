@@ -1,5 +1,27 @@
 # e2e
 
+## 0.21.3
+
+### Patch Changes
+
+- [#1219](https://github.com/tester-army/e2e/pull/1219) [`f589a32`](https://github.com/tester-army/e2e/commit/f589a32195bd9c2501f1ce98a118d18afa6da5ec) Thanks [@okwasniewski](https://github.com/okwasniewski)! - Add `onAction` to `agent.act`: a hook that runs after each action once the screen settles, for replayed actions too. Use it to take a screenshot per action.
+
+- [#1218](https://github.com/tester-army/e2e/pull/1218) [`58a5cec`](https://github.com/tester-army/e2e/commit/58a5cec116ca79b1589cb78b6baae40abf3e735a) Thanks [@okwasniewski](https://github.com/okwasniewski)! - Keep screenshots after a secret fill. `app.screenshot()`, `toHaveScreenshot()`, and assertion and failure screenshots no longer stop once a test fills a secret. They mask secure fields only, and `toHaveScreenshot()` still fails when the engine can't prove they are masked. The model still gets no pixels after a fill.
+
+- [#1240](https://github.com/tester-army/e2e/pull/1240) [`332b934`](https://github.com/tester-army/e2e/commit/332b934684b75227ad60dbc0cc8c59b818ac48e0) Thanks [@kacperkapusciak](https://github.com/kacperkapusciak)! - Add `e2e upgrade` (alias `e2e update`): upgrades `e2e` to the latest release, a dist-tag such as `nightly`, or one version, and moves each `@e2e-dev/*` package the project lists from the registry to the newest release whose peer ranges accept it. Linked packages and ones the registry doesn't have stay as they are. The project's package manager installs them; `--dry-run` prints the plan. Each upgrade sends an `e2e_upgrade_completed` telemetry event with the result and the `e2e` versions before and after. The update notice now suggests `e2e upgrade` instead of an install command for `e2e` alone.
+
+- [#1252](https://github.com/tester-army/e2e/pull/1252) [`3bd32ef`](https://github.com/tester-army/e2e/commit/3bd32ef8ef847368d3a9ad994520309fa39c53a7) Thanks [@KrzysztofMoch](https://github.com/KrzysztofMoch)! - `e2e explore` and the MCP `open_session` now launch a device target's pinned app before their first observation, as a test's `app.open()` does. They no longer depend on the engine's warm-up having opened it, which it skips for a target with an `app.appPath`, and used to fail with `APP_NOT_OPEN`.
+
+- [#1239](https://github.com/tester-army/e2e/pull/1239) [`d7ec0ec`](https://github.com/tester-army/e2e/commit/d7ec0ecf4458d8818087bd7c9cb31bd1dc241eed) Thanks [@okwasniewski](https://github.com/okwasniewski)! - Add `screen.tree()` and `screen.debug()`. `tree()` returns the whole screen as the agent reads it, one node per line with secrets redacted. `debug()` prints the same text to the test's output.
+
+- [#1216](https://github.com/tester-army/e2e/pull/1216) [`19f3ca2`](https://github.com/tester-army/e2e/commit/19f3ca2916cbfdd76589e3c68266a2d16887a041) Thanks [@okwasniewski](https://github.com/okwasniewski)! - The run telemetry event now sorts executed tests by how the replay cache carried them (`tests_code_only`, `tests_replayed`, `tests_assisted`, `tests_live`), counts `agent.act` steps that ran with the cache off (`agent_steps_uncached`), why steps missed the cache or handed off (`agent_miss_reasons`, `agent_handoff_reasons`), and the model calls by agent entry point (`model_calls_act`, `model_calls_assert`, `model_calls_extract`, `model_calls_waitfor`).
+
+- [#1239](https://github.com/tester-army/e2e/pull/1239) [`d7ec0ec`](https://github.com/tester-army/e2e/commit/d7ec0ecf4458d8818087bd7c9cb31bd1dc241eed) Thanks [@okwasniewski](https://github.com/okwasniewski)! - Print `console.log` and other test output when the `list` reporter is off. With `--reporter json`, all user output goes to stderr, so stdout holds only the report.
+
+- [#1238](https://github.com/tester-army/e2e/pull/1238) [`7b6ac53`](https://github.com/tester-army/e2e/commit/7b6ac5327eb6f98fb51f7e22184fdd5274905e75) Thanks [@okwasniewski](https://github.com/okwasniewski)! - Print a notice after a command when a newer `e2e` is on npm, with the install command for the project's package manager. The registry is checked once a day. Nothing prints in CI or when piped. Set `E2E_UPDATE_CHECK_DISABLED=1` or `NO_UPDATE_NOTIFIER=1` to turn it off. `E2E_TELEMETRY_DISABLED=1` and `DO_NOT_TRACK=1` turn it off too.
+
+- [#1209](https://github.com/tester-army/e2e/pull/1209) [`ef977f4`](https://github.com/tester-army/e2e/commit/ef977f4856da009cac26d78d2e9bb14e5991ee41) Thanks [@knowbody](https://github.com/knowbody)! - Engine disposal receives optional revocable permission to preserve run-owned resources for a replacement worker. Final shutdown, forced termination, and parent disconnect revoke that permission while disposal is pending. Each worker still invokes an engine's disposal hook one time. Missing permission requests final cleanup, including direct and standalone calls.
+
 ## 0.21.2
 
 ### Patch Changes
